@@ -15,8 +15,6 @@ namespace ItemList.Controllers
     {
         private readonly IItemRepository _itemRepository;
         private readonly IMapper _mapper;
-        private readonly AppDbContext dbContext;
-
         //public ItemListController(AppDbContext dbContext)
         //{
         //    this.dbContext = dbContext;
@@ -26,12 +24,6 @@ namespace ItemList.Controllers
             _itemRepository = itemRepository;
             _mapper = mapper;
         }
-        //[HttpGet]
-        //public IActionResult GetAllItemLists()
-        //{
-        //    var allItems = dbContext.ItemModels.ToList();
-        //    return Ok(allItems);
-        //}
         [HttpPost]
         public async Task<ActionResult<AddItemDTOs>> AddItem(AddItemDTOs item)
         {
@@ -51,6 +43,22 @@ namespace ItemList.Controllers
             }
             return Ok(item);
         }
-        public async Task
+        [HttpGet]
+        public async Task<IEnumerable<ItemModel>> GetAllItems()
+        {
+            var list = await _itemRepository.GetAllItems();
+            return list;
+        }
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<AddItemDTOs?>> UpdateItem(int id, AddItemDTOs updateItem)
+        {
+            var updated = _mapper.Map<ItemModel>(updateItem);
+            var changeItem = await _itemRepository.UpdateItem(id, updated);
+
+            if (changeItem == null) {
+                throw new KeyNotFoundException("No update found.");
+            }
+            return Ok(changeItem);
+        }
     }
 }

@@ -35,16 +35,25 @@ namespace ItemList.Repositories
             return itemList;
         }
 
-        public async Task<ItemModel> GetItemId(int id)
+        public async Task<ItemModel?> GetItemId(int id)
         {
             var getItem = await _context.ItemModels.FindAsync(id);
             return getItem;
         }
 
-        public async Task<ItemModel> UpdateItem(ItemModel item)
+        public async Task<ItemModel?> UpdateItem(int id, ItemModel item)
         {
-            var updatedItem = ;
-            return updatedItem;
+            var currentItem = await _context.ItemModels.FindAsync(id);
+            if (currentItem == null) 
+            {
+                throw new KeyNotFoundException("No item found.");  
+            }
+            currentItem.ItemName = item.ItemName;
+            currentItem.Description = item.Description;
+            currentItem.Category = item.Category;
+
+            await _context.SaveChangesAsync();
+            return currentItem;
         }
     }
 }
