@@ -1,4 +1,6 @@
 using ItemList.Data;
+using ItemList.Profiles;
+using ItemList.Repositories;
 using ItemList.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +13,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IItemRepository, IItemRepository>();
+builder.Services.AddAutoMapper(typeof(ItemProfile).Assembly);
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

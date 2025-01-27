@@ -4,7 +4,7 @@ namespace ItemList.Repositories.Interfaces
 {
     public interface IItemRepository
     {
-        Task<IEnumerable<ItemModel>> GetAllItems(int id);
+        Task<IEnumerable<ItemModel>> GetAllItems();
         Task<ItemModel> GetItemId(int id);
         Task<ItemModel> AddItem(ItemModel item);
         Task<ItemModel> UpdateItem(ItemModel item);

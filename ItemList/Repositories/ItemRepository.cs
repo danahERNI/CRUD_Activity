@@ -2,6 +2,7 @@
 using ItemList.Data;
 using ItemList.Model.Entities;
 using ItemList.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ItemList.Repositories
 {
@@ -14,32 +15,36 @@ namespace ItemList.Repositories
             _context = context;
         }
 
-        public async Task<int> AddItem(ItemModel item)
+        public async Task<ItemModel> AddItem(ItemModel item)
         {
-            _context.ItemLists.Add(item);
+            item.DateAdded = DateTime.Now;
+            _context.ItemModels.Add(item);
             await _context.SaveChangesAsync();
-            return item.Id;
+            return item;
 
         }
 
-        public Task<ItemModel> DeleteItem(int id)
+        public async Task<ItemModel> DeleteItem(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ItemModel>> GetAllItems(int id)
+        public async Task<IEnumerable<ItemModel>> GetAllItems()
         {
-            throw new NotImplementedException();
+            var itemList = await _context.ItemModels.ToListAsync();
+            return itemList;
         }
 
-        public Task<ItemModel> GetItemId(int id)
+        public async Task<ItemModel> GetItemId(int id)
         {
-            throw new NotImplementedException();
+            var getItem = await _context.ItemModels.FindAsync(id);
+            return getItem;
         }
 
-        public Task<ItemModel> UpdateItem(ItemModel item)
+        public async Task<ItemModel> UpdateItem(ItemModel item)
         {
-            throw new NotImplementedException();
+            var updatedItem = ;
+            return updatedItem;
         }
     }
 }
