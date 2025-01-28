@@ -7,6 +7,10 @@
         public string? Description { get; set; }
         public required string Category { get; set; }
         public DateTime DateAdded { get; set; }
+        
+        // owner;
+        public Owner? Owner { get; set; }
+        public int OwnerId { get; set; }
 
     }
 }
