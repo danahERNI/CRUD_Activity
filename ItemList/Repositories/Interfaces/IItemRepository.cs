@@ -8,7 +8,7 @@ namespace ItemList.Repositories.Interfaces
         public Task<ItemModel?> GetItemId(int id);
         public Task<ItemModel> AddItem(ItemModel item);
         public Task<ItemModel?> UpdateItem(int id, ItemModel item);
-        public Task<ItemModel> DeleteItem(int id);
+        public Task<ItemModel?> DeleteItem(int id);
 
     }
 }

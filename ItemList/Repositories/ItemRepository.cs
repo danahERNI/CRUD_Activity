@@ -24,9 +24,16 @@ namespace ItemList.Repositories
 
         }
 
-        public async Task<ItemModel> DeleteItem(int id)
+        public async Task<ItemModel?> DeleteItem(int id)
         {
-            throw new NotImplementedException();
+            var item = await _context.ItemModels.FindAsync(id);
+            if (item == null) 
+            {
+                return null;
+            }
+            _context.ItemModels.Remove(item);
+            await _context.SaveChangesAsync();
+            return item;
         }
 
         public async Task<IEnumerable<ItemModel>> GetAllItems()

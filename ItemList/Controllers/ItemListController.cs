@@ -60,5 +60,15 @@ namespace ItemList.Controllers
             }
             return Ok(changeItem);
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<AddItemDTOs?>> DeleteItem(int id) 
+        {
+            var removeItem = await _itemRepository.DeleteItem(id);
+            if (removeItem == null)
+            {
+                return NotFound();
+            }
+            return Ok(removeItem);
+        }
     }
 }
