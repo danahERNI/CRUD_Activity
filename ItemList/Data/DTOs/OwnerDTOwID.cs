@@ -1,13 +1,11 @@
-﻿namespace ItemList.Model.Entities
+﻿namespace ItemList.Data.DTOs
 {
-    public class Owner
+    public class OwnerDTOwID
     {
         public int OwnerId { get; set; }
         public required string OwnerName { get; set; }
         public required string ContactNumber { get; set; }
         public string? Email { get; set; }
 
-        //items
-        public ICollection<ItemModel?>? ItemModels { get; set; }
     }
 }

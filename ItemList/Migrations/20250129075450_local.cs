@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ItemList.Migrations
 {
     /// <inheritdoc />
-    public partial class ADDEDOWNERTABLE : Migration
+    public partial class local : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,8 +19,7 @@ namespace ItemList.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OwnerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemId = table.Column<int>(type: "int", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -36,8 +35,8 @@ namespace ItemList.Migrations
                     ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OwnerId = table.Column<int>(type: "int", nullable: false)
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OwnerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,15 +45,13 @@ namespace ItemList.Migrations
                         name: "FK_ItemModels_OwnerModels_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "OwnerModels",
-                        principalColumn: "OwnerId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "OwnerId");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemModels_OwnerId",
                 table: "ItemModels",
-                column: "OwnerId",
-                unique: true);
+                column: "OwnerId");
         }
 
         /// <inheritdoc />

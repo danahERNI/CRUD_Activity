@@ -14,10 +14,12 @@ namespace ItemList.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Owner>(entity =>
-            //{
-            //    entity.has
-            //});
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ItemModel>()
+                .HasOne(i => i.Owner)
+                .WithMany(o => o.OwnerId)
+                .HasForeignKey(i => i.OwnerId);
         }
 
     }

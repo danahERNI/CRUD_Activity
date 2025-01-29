@@ -34,7 +34,7 @@ namespace ItemList.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateAdded")
+                    b.Property<DateTime?>("DateAdded")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -44,13 +44,12 @@ namespace ItemList.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OwnerId")
+                    b.Property<int?>("OwnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId")
-                        .IsUnique();
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("ItemModels");
                 });
@@ -70,9 +69,6 @@ namespace ItemList.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
                     b.Property<string>("OwnerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -85,10 +81,8 @@ namespace ItemList.Migrations
             modelBuilder.Entity("ItemList.Model.Entities.ItemModel", b =>
                 {
                     b.HasOne("ItemList.Model.Entities.Owner", "Owner")
-                        .WithOne("ItemModel")
-                        .HasForeignKey("ItemList.Model.Entities.ItemModel", "OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("ItemModel")
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
                 });
