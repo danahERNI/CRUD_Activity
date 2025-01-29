@@ -15,10 +15,7 @@ namespace ItemList.Controllers
     {
         private readonly IItemRepository _itemRepository;
         private readonly IMapper _mapper;
-        //public ItemListController(AppDbContext dbContext)
-        //{
-        //    this.dbContext = dbContext;
-        //}
+
         public ItemListController(IItemRepository itemRepository, IMapper mapper)
         {
             _itemRepository = itemRepository;

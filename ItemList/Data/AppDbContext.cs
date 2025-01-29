@@ -10,6 +10,15 @@ namespace ItemList.Data
         { 
         }
         public DbSet<ItemModel> ItemModels { get; set; }
-        
+        public DbSet<Owner> OwnerModels { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<Owner>(entity =>
+            //{
+            //    entity.has
+            //});
+        }
+
     }
 }
