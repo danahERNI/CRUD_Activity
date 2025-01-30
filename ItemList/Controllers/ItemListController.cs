@@ -14,19 +14,22 @@ namespace ItemList.Controllers
     public class ItemListController : ControllerBase
     {
         private readonly IItemRepository _itemRepository;
+        private readonly IOwnerRepository _ownerRepository;
         private readonly IMapper _mapper;
 
-        public ItemListController(IItemRepository itemRepository, IMapper mapper)
+        public ItemListController(IItemRepository itemRepository, IMapper mapper, IOwnerRepository ownerRepository)
         {
             _itemRepository = itemRepository;
             _mapper = mapper;
+            _ownerRepository = ownerRepository;
         }
         [HttpPost]
         public async Task<ActionResult<AddItemDTOs>> AddItem(AddItemDTOs item)
         {
 
-            var newItem = _mapper.Map<ItemModel>(item);
-            var newDateAdded = await _itemRepository.AddItem(newItem);
+            var mapItem = _mapper.Map<ItemModel>(item);
+            var newItem = await _itemRepository.AddItem(mapItem);
+
             return Ok();
         }
         [HttpGet("{id}")]
@@ -50,6 +53,7 @@ namespace ItemList.Controllers
         public async Task<ActionResult<AddItemDTOs?>> UpdateItem(int id, AddItemDTOs updateItem)
         {
             var updated = _mapper.Map<ItemModel>(updateItem);
+            updated.Id = id;
             var changeItem = await _itemRepository.UpdateItem(id, updated);
 
             if (changeItem == null) {

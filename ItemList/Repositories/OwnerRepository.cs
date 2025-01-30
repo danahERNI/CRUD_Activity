@@ -1,6 +1,7 @@
 ﻿using ItemList.Data;
 using ItemList.Model.Entities;
 using ItemList.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace ItemList.Repositories
@@ -14,27 +15,40 @@ namespace ItemList.Repositories
             _context = context;
         }
 
-        public async Task<Owner> AddOwner(Owner owner)
+        public async Task<Owner?> AddOwner(Owner owner)
         {
-            _context.OwnerModels.Add(owner);
+            var create = await _context.OwnerModels.AddAsync(owner);
             await _context.SaveChangesAsync();
             return owner;
         }
 
-        public Task<Owner?> DeleteOwner(int id)
+        public async Task<Owner?> DeleteOwner(int id)
         {
-            throw new NotImplementedException();
+            var findId = await _context.OwnerModels.Where(i => i.OwnerId == id).FirstOrDefaultAsync();
+            if (findId == null)
+            {
+                return null;
+            }
+            _context.OwnerModels.Remove(findId);
+            await _context.SaveChangesAsync();
+            return findId;
+
         }
 
         public async Task<IEnumerable<Owner>> GetAllUsers()
         {
-            var ownerList = await _context.OwnerModels.ToListAsync();
+            var ownerList = await _context.OwnerModels
+                .Include(o => o.ItemModels)
+                .ToListAsync();
             return ownerList;
         }
 
         public async Task<Owner?> GetOwnerId(int id)
         {
-            var getOwnerId = await _context.OwnerModels.FindAsync(id);
+            var getOwnerId = await _context.OwnerModels
+                .Where(i => i.OwnerId == id)
+                .Include(o => o.ItemModels)
+                .FirstOrDefaultAsync();
             return getOwnerId;
         }
 

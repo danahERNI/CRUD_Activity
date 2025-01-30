@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using ItemList.Data;
 using ItemList.Model.Entities;
 using ItemList.Repositories.Interfaces;
@@ -9,10 +10,12 @@ namespace ItemList.Repositories
     public class ItemRepository : IItemRepository
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ItemRepository(AppDbContext context)
+        public ItemRepository(AppDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ItemModel> AddItem(ItemModel item)
@@ -58,6 +61,10 @@ namespace ItemList.Repositories
             currentItem.ItemName = item.ItemName;
             currentItem.Description = item.Description;
             currentItem.Category = item.Category;
+            currentItem.OwnerId = item.OwnerId;
+            //item.DateAdded = currentItem.DateAdded;
+            //item.OwnerId =  currentItem.OwnerId;
+            //_mapper.Map(item, currentItem);
 
             await _context.SaveChangesAsync();
             return currentItem;

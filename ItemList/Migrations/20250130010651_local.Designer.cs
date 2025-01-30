@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ItemList.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250128071955_ADDED OWNER TABLE")]
-    partial class ADDEDOWNERTABLE
+    [Migration("20250130010651_local")]
+    partial class local
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace ItemList.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateAdded")
+                    b.Property<DateTime?>("DateAdded")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -47,13 +47,12 @@ namespace ItemList.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OwnerId")
+                    b.Property<int?>("OwnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId")
-                        .IsUnique();
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("ItemModels");
                 });
@@ -73,9 +72,6 @@ namespace ItemList.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
                     b.Property<string>("OwnerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -87,18 +83,14 @@ namespace ItemList.Migrations
 
             modelBuilder.Entity("ItemList.Model.Entities.ItemModel", b =>
                 {
-                    b.HasOne("ItemList.Model.Entities.Owner", "Owner")
-                        .WithOne("ItemModel")
-                        .HasForeignKey("ItemList.Model.Entities.ItemModel", "OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
+                    b.HasOne("ItemList.Model.Entities.Owner", null)
+                        .WithMany("ItemModels")
+                        .HasForeignKey("OwnerId");
                 });
 
             modelBuilder.Entity("ItemList.Model.Entities.Owner", b =>
                 {
-                    b.Navigation("ItemModel");
+                    b.Navigation("ItemModels");
                 });
 #pragma warning restore 612, 618
         }

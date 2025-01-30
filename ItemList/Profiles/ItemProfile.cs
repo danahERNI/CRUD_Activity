@@ -8,7 +8,8 @@ namespace ItemList.Profiles
     {
         public ItemProfile()
         { 
-            CreateMap<AddItemDTOs, ItemModel>().ReverseMap();
+            CreateMap<AddItemDTOs, ItemModel>();
+            CreateMap<ItemModel, AddItemDTOs>();
         }
     }
 }
