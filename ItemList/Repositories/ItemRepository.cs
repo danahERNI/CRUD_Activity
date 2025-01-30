@@ -41,9 +41,7 @@ namespace ItemList.Repositories
 
         public async Task<IEnumerable<ItemModel>> GetAllItems()
         {
-            var itemList = await _context.ItemModels.Include(o => o.Owner)
-                                  .Where(o => o.Owner != null && o.Owner.OwnerId == o.OwnerId) 
-                                  .ToListAsync();
+            var itemList = await _context.ItemModels.ToListAsync();
             return itemList;
         }
 

@@ -6,8 +6,6 @@
         public required string OwnerName { get; set; }
         public required string ContactNumber { get; set; }
         public string? Email { get; set; }
-
-        //items
-        public ICollection<ItemModel?>? ItemModels { get; set; }
+        public ICollection<ItemModel?>? ItemModels { get; set; } = new List<ItemModel?>();
     }
 }

@@ -37,13 +37,18 @@ namespace ItemList.Repositories
 
         public async Task<IEnumerable<Owner>> GetAllUsers()
         {
-            var ownerList = await _context.OwnerModels.ToListAsync();
+            var ownerList = await _context.OwnerModels
+                .Include(o => o.ItemModels)
+                .ToListAsync();
             return ownerList;
         }
 
         public async Task<Owner?> GetOwnerId(int id)
         {
-            var getOwnerId = await _context.OwnerModels.FindAsync(id);
+            var getOwnerId = await _context.OwnerModels
+                .Where(i => i.OwnerId == id)
+                .Include(o => o.ItemModels)
+                .FirstOrDefaultAsync();
             return getOwnerId;
         }
 

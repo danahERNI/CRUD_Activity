@@ -80,16 +80,14 @@ namespace ItemList.Migrations
 
             modelBuilder.Entity("ItemList.Model.Entities.ItemModel", b =>
                 {
-                    b.HasOne("ItemList.Model.Entities.Owner", "Owner")
-                        .WithMany("ItemModel")
+                    b.HasOne("ItemList.Model.Entities.Owner", null)
+                        .WithMany("ItemModels")
                         .HasForeignKey("OwnerId");
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("ItemList.Model.Entities.Owner", b =>
                 {
-                    b.Navigation("ItemModel");
+                    b.Navigation("ItemModels");
                 });
 #pragma warning restore 612, 618
         }

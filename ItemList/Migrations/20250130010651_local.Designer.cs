@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ItemList.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250129075450_local")]
+    [Migration("20250130010651_local")]
     partial class local
     {
         /// <inheritdoc />
@@ -83,16 +83,14 @@ namespace ItemList.Migrations
 
             modelBuilder.Entity("ItemList.Model.Entities.ItemModel", b =>
                 {
-                    b.HasOne("ItemList.Model.Entities.Owner", "Owner")
-                        .WithMany("ItemModel")
+                    b.HasOne("ItemList.Model.Entities.Owner", null)
+                        .WithMany("ItemModels")
                         .HasForeignKey("OwnerId");
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("ItemList.Model.Entities.Owner", b =>
                 {
-                    b.Navigation("ItemModel");
+                    b.Navigation("ItemModels");
                 });
 #pragma warning restore 612, 618
         }

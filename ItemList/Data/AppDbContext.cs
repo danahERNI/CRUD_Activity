@@ -12,15 +12,5 @@ namespace ItemList.Data
         public DbSet<ItemModel> ItemModels { get; set; }
         public DbSet<Owner> OwnerModels { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<ItemModel>()
-                .HasOne(i => i.Owner)
-                .WithMany(o => o.OwnerId)
-                .HasForeignKey(i => i.OwnerId);
-        }
-
     }
 }
